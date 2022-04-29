@@ -1,9 +1,11 @@
+import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
-import Image from 'next/image'
-import avatar from '../images/avatar.jpg'
+import UserImageComponent from './UserImageComponent'
 
 const UserDropdownMenu = ({ clickOutside, show }) => {
   const ref = useRef(null)
+  const router = useRouter()
+
   useEffect(() => {
     const handleClickOuteSide = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -25,15 +27,7 @@ const UserDropdownMenu = ({ clickOutside, show }) => {
       <div>
         <span className="text-xs text-gray-500">Signed in </span>
         <div className="flex items-center space-x-2 rounded-lg px-2 py-3 transition duration-150 ease-in-out hover:bg-gray-100">
-          <div className="relative h-[40px] w-[40px] rounded-full border border-teal-50 hover:border-teal-100 hover:shadow-xl">
-            <Image
-              src={avatar}
-              layout="fill"
-              objectFit="cover"
-              alt="user-profile"
-              className="rounded-full"
-            />
-          </div>
+          <UserImageComponent width={40} height={40} />
           <div>
             <div className="font-semibold text-black">Sabastine</div>
             <div className="text-xs text-gray-500">Sabstine@gmail.com</div>
@@ -41,7 +35,10 @@ const UserDropdownMenu = ({ clickOutside, show }) => {
         </div>
         <div className="mt-3">
           <span className="text-xs text-gray-500">Account Settings</span>
-          <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-100">
+          <div
+            className="cursor-pointer rounded-lg p-2 hover:bg-gray-100"
+            onClick={() => router.push('/create')}
+          >
             Create a pixel
           </div>
           <div className="mt-4 border-t border-gray-200 pt-2">
