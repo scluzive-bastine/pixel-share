@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import UserImageComponent from './UserImageComponent'
+import { signOut } from 'next-auth/react'
 
-const UserDropdownMenu = ({ clickOutside, show }) => {
+const UserDropdownMenu = ({ clickOutside, show, session }) => {
   const ref = useRef(null)
   const router = useRouter()
+  const {
+    user: { name, email, image },
+  } = session
 
   useEffect(() => {
     const handleClickOuteSide = (e) => {
@@ -27,10 +31,10 @@ const UserDropdownMenu = ({ clickOutside, show }) => {
       <div>
         <span className="text-xs text-gray-500">Signed in </span>
         <div className="flex items-center space-x-2 rounded-lg px-2 py-3 transition duration-150 ease-in-out hover:bg-gray-100">
-          <UserImageComponent width={40} height={40} />
+          <UserImageComponent image={image} />
           <div>
-            <div className="font-semibold text-black">Sabastine</div>
-            <div className="text-xs text-gray-500">Sabstine@gmail.com</div>
+            <div className="truncate font-semibold text-black">{name}</div>
+            <div className="text-xs text-gray-500">{email}</div>
           </div>
         </div>
         <div className="mt-3">
@@ -42,7 +46,10 @@ const UserDropdownMenu = ({ clickOutside, show }) => {
             Create a pixel
           </div>
           <div className="mt-4 border-t border-gray-200 pt-2">
-            <div className="cursor-pointer rounded-lg p-2 hover:bg-red-100">
+            <div
+              className="cursor-pointer rounded-lg p-2 hover:bg-red-100"
+              onClick={signOut}
+            >
               Logout
             </div>
           </div>

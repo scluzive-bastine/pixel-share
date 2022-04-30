@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import avatar from '../images/avatar.jpg'
 
-const UserImageComponent = ({ height, width }) => {
+const UserImageComponent = ({ image }) => {
   return (
     <div
-      className={`trnasition relative h-[${height}px] w-[${width}px] rounded-full border border-teal-50 duration-150 ease-in-out hover:border-teal-100 hover:shadow-xl`}
+      className={`trnasition relative h-[40px] w-[40px] rounded-full border border-teal-50 duration-150 ease-in-out hover:border-teal-100 hover:shadow-xl`}
     >
       <Image
-        src={avatar}
+        src={image}
         layout="fill"
         objectFit="cover"
         alt="user-profile"

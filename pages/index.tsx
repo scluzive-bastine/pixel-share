@@ -1,10 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useEffect } from 'react'
 // import Image from 'next/image'
 import Masonry from 'react-masonry-css'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
 import Post from '../components/Post'
+import { usePixelContext } from '../context/context'
+import { fetchCategories } from '../utils/useFetch'
+
 
 const categories = [
   {
@@ -89,6 +93,12 @@ const breakpointsObj = {
 
 
 const Home: NextPage = () => {
+  const { getCategories } = usePixelContext()
+  
+  useEffect(() => {
+    fetchCategories(getCategories)    
+  }, [])
+
   return (
     <div className="bg-white">
       <Head>

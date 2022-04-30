@@ -1,5 +1,6 @@
 import { AiOutlineSearch } from 'react-icons/ai'
 import UserImageComponent from './UserImageComponent'
+import avatar from '../images/avatar.jpg'
 const Hero = () => {
   return (
     <div className="mx-auto mt-10 max-w-screen-md px-3 lg:px-0">
@@ -22,10 +23,10 @@ const Hero = () => {
       <div className="mt-10">
         <div className="text-center text-gray-200">Trending Users</div>
         <div className="flex items-center justify-center space-x-2 py-3 md:space-x-4">
-          <UserImageComponent />
-          <UserImageComponent />
-          <UserImageComponent />
-          <UserImageComponent />
+          <UserImageComponent image={avatar} />
+          <UserImageComponent image={avatar} />
+          <UserImageComponent image={avatar} />
+          <UserImageComponent image={avatar} />
         </div>
       </div>
     </div>

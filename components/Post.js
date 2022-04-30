@@ -1,5 +1,6 @@
 import UserImageComponent from '../components/UserImageComponent'
 import { MdOutlineFileDownload } from 'react-icons/md'
+import avatar from '../images/avatar.jpg'
 
 const Post = ({ name, image, likes, description }) => {
   return (
@@ -17,7 +18,7 @@ const Post = ({ name, image, likes, description }) => {
         </div>
       </div>
       <div className="flex items-center space-x-2 px-2">
-        <UserImageComponent width={40} height={40} />
+        <UserImageComponent image={avatar} />
         <div>
           <div className="text-sm">{name}</div>
           <p className="truncate text-xs text-gray-400">{description}</p>
