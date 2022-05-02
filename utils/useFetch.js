@@ -1,5 +1,5 @@
 import { client } from '../sanity'
-import { categoriesQuery } from '../utils/queries'
+import { categoriesQuery, postsQuery } from '../utils/queries'
 
 const fetchCategories = async (setData) => {
   try {
@@ -10,4 +10,15 @@ const fetchCategories = async (setData) => {
   }
 }
 
-export { fetchCategories }
+const fetchPosts = async (setLoading, setError, setData) => {
+  setLoading(true)
+  try {
+    const data = await client.fetch(postsQuery)
+    setData(data)
+    setLoading(false)
+  } catch (error) {
+    setError(error)
+  }
+}
+
+export { fetchCategories, fetchPosts }

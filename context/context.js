@@ -12,9 +12,17 @@ const AppActions = () => {
     })
   }
 
+  const getPosts = (data) => {
+    dispatch({
+      type: 'SET_POSTS',
+      payload: data,
+    })
+  }
+
   return {
     state,
     getCategories,
+    getPosts,
   }
 }
 
@@ -23,6 +31,7 @@ const PixelProvider = ({ children }) => {
 
   const value = {
     categories: state.categories,
+    posts: state.posts,
     ...props,
   }
 
