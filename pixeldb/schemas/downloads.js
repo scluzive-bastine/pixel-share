@@ -8,11 +8,5 @@ export default {
       title: 'Downloads',
       type: 'number',
     },
-    {
-      name: 'post',
-      title: 'Post',
-      type: 'reference',
-      to: { type: 'post' },
-    },
   ],
 }

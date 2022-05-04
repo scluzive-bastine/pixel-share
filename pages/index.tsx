@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   }, [])
 
   return (
-    <div className="bg-white">
+    <div className="bg-gray-100">
       <Head>
         <title>Pixel share</title>
         <link rel="icon" href="/favicon.ico" />
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
       </header>
 
       <main className="py-4">
-        <div className="relative mx-auto flex max-w-screen-lg justify-center">
+        <div className="relative flex container justify-center">
           {/* <div className='absolute top-0 left-0 bg-gradient-to-r from-[#ffffff] z-10 h-10 w-1/12' /> */}
           <div className="flex space-x-2 overflow-x-scroll whitespace-nowrap px-3 text-2xl scrollbar-hide first:pl-24 last:pr-20 md:space-x-6">
             {categories.map((category: { _id: string, name: string }) => (
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
               </div>
             ))}
           </div>
-          <div className="absolute top-0 right-0 z-10 h-10 w-1/12 bg-gradient-to-l from-[#ffffff]" />
+          <div className="absolute top-0 right-0 z-10 h-10 w-1/12 bg-gradient-to-l from-[#f3f4f6]" />
         </div>
 
         <div className="mx-auto mt-10 max-w-screen-2xl">

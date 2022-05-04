@@ -15,13 +15,14 @@ const Content = () => {
   const { posts } = usePixelContext()
   return (
     <Masonry className="flex" breakpointCols={breakpointsObj}>
-      {posts.map((post, i) => (
+      {posts.map((post) => (
         <Post
-          key={i}
+          key={post._id}
           name={post.name}
           description={post.description}
           likes={post.likes}
           image={post.image}
+          id={post._id}
         />
       ))}
     </Masonry>

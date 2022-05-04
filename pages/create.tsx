@@ -28,21 +28,6 @@ interface ICategory {
   name: string
 }
 
-// interface Session {
-//   session: {
-//     session: {
-//       token: string
-//       session: {
-//         user: {
-//           email: string
-//           image: string
-//           name: string
-//         }
-//       }
-//     }
-//   }
-// }
-
 interface ISession {
   token: string
 }
@@ -143,7 +128,7 @@ const Create = () => {
       <header className="bg-gradient-to-r from-cyan-500 to-blue-500">
         <Header />
       </header>
-      <main className="relative mx-auto max-w-screen-lg px-4">
+      <main className="relative container px-4">
         <div className="mt-10 h-[200px] w-full">
           <div className="h-full w-full rounded bg-gray-100 p-3">
             <div className="relative h-full w-full rounded border-2 border-dashed border-gray-300">

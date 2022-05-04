@@ -4,9 +4,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Water+Brush&display=swap');
 
 @layer components {
+    body {
+        @apply bg-gray-100;
+    }
     .logo {
         font-family: 'Water Brush',
         cursive;
+    }
+    .container {
+        @apply mx-auto max-w-screen-lg
     }
     .btn-ol {
         @apply border rounded-lg border-white text-white font-semibold px-6 py-2 hover:bg-white hover:text-blue-600 transition duration-150 ease-in-out

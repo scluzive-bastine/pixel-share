@@ -29,6 +29,12 @@ export default {
       type: 'text',
     },
     {
+      name: 'followers',
+      title: 'Followers',
+      type: 'array',
+      of: [{ type: 'followers' }],
+    },
+    {
       name: 'socials',
       title: 'Social',
       type: 'array',

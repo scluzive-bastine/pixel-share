@@ -33,6 +33,12 @@ export default {
       type: 'reference',
       to: { type: 'user' },
     },
+    {
+      name: 'likes',
+      title: 'Likes',
+      type: 'array',
+      of: [{ type: 'like' }],
+    },
   ],
   preview: {
     select: {

@@ -1,6 +1,6 @@
 export default {
-  name: 'likes',
-  title: 'Likes',
+  name: 'like',
+  title: 'Like',
   type: 'document',
   fields: [
     {
@@ -9,10 +9,10 @@ export default {
       type: 'number',
     },
     {
-      name: 'post',
-      title: 'Post',
+      name: 'postedBy',
+      title: 'Posted By',
       type: 'reference',
-      to: { type: 'post' },
+      to: { type: 'user' },
     },
   ],
 }

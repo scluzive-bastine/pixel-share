@@ -1,20 +1,23 @@
 import UserImageComponent from '../components/UserImageComponent'
 import { MdOutlineFileDownload } from 'react-icons/md'
 import avatar from '../images/avatar.jpg'
+import Link from 'next/link'
 
-const Post = ({ name, image, likes, description }) => {
+const Post = ({ name, image, likes, description, id }) => {
   return (
     <div className="cursor-pointer">
       <div className="group relative w-full px-2 py-4">
-        <div className="relative w-full rounded-2xl">
-          <img
-            loading="lazy"
-            src={image.asset.url}
-            alt={name}
-            className="rounded-xl"
-          />
-          <div className="group-hover:bg-black-60 absolute top-0 right-0 h-full w-full rounded-xl transition duration-150 ease-in-out"></div>
-        </div>
+        <Link href={`/post/${id}`}>
+          <div className="relative w-full rounded-2xl">
+            <img
+              loading="lazy"
+              src={image.asset.url}
+              alt={name}
+              className="rounded-xl"
+            />
+            <div className="group-hover:bg-black-60 absolute top-0 right-0 h-full w-full rounded-xl transition duration-150 ease-in-out"></div>
+          </div>
+        </Link>
         <div className="absolute right-5 top-6 hidden rounded bg-teal-500 px-3 py-1 text-xs text-white transition duration-150 ease-in-out group-hover:inline">
           {likes} Likes
         </div>
