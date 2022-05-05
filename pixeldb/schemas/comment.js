@@ -4,9 +4,10 @@ export default {
   type: 'document',
   fields: [
     {
-      name: 'name',
-      title: 'Name',
-      type: 'string',
+      name: 'user',
+      title: 'User',
+      type: 'reference',
+      to: [{ type: 'user' }],
     },
     {
       name: 'comment',
@@ -20,4 +21,10 @@ export default {
       to: { type: 'post' },
     },
   ],
+  preview: {
+    select: {
+      title: 'user.name',
+      media: 'post.image',
+    },
+  },
 }

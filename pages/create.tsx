@@ -258,8 +258,8 @@ const Create = () => {
           </div>
         </div>
       </main>
-      { error && <Error /> }
-      { submitted && <Success />}
+      { error && <Error message="Fill all the fields and Select an image" /> }
+      { submitted && <Success message="Posted Created!" />}
     </div>
   )
 }

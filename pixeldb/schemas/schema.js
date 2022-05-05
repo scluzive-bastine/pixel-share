@@ -10,6 +10,7 @@ import downloads from './downloads'
 import followers from './followers'
 import likes from './likes'
 import social from './social'
+import comment from './comment'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -26,5 +27,6 @@ export default createSchema({
     followers,
     likes,
     social,
+    comment,
   ]),
 })

@@ -21,3 +21,23 @@ export const followUser = async (user, follower) => {
     .then((res) => console.log(res))
     .catch((error) => console.log(error))
 }
+
+export const download = async (id) => {
+  const response = await fetch(`/api/download/`, {
+    method: 'POST',
+    body: JSON.stringify({ id }),
+  })
+    .then((res) => res.json())
+    .catch((error) => console.log(error))
+}
+
+export const createComment = async (id, user, comment) => {
+  const response = await fetch(`/api/create-comment/`, {
+    method: 'POST',
+    body: JSON.stringify({ id, user, comment }),
+  })
+    .then((res) => {
+      return res
+    })
+    .catch((error) => console.log(error))
+}

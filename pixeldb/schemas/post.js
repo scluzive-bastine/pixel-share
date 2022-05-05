@@ -39,6 +39,12 @@ export default {
       type: 'array',
       of: [{ type: 'like' }],
     },
+    {
+      name: 'downloads',
+      title: 'Downloads',
+      type: 'array',
+      of: [{ type: 'downloads' }],
+    },
   ],
   preview: {
     select: {
