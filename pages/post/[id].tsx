@@ -147,7 +147,7 @@ const Post = ({ post }: Props) => {
 
 export default Post
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths  = async () => {
     interface Post {
         _id: string
     }

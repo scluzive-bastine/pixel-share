@@ -39,3 +39,34 @@ export interface Comment {
     image: string
   }
 }
+
+export interface User {
+  _id: string
+  name: string
+  bio: string
+  location: string
+  followers: []
+  image: string
+  posts: {
+    map(arg0: (post: any) => void)
+    _id: string
+    name: string
+    description: string
+    downloads: []
+    likes: []
+    image: {
+      asset: {
+        url: string
+      }
+    }
+  }
+}
+
+export interface SinglePost {
+  downloads: []
+  _id: string
+  name: string
+  description: string
+  image: string
+  likes: any
+}

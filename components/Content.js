@@ -1,6 +1,5 @@
 import Masonry from 'react-masonry-css'
 import Post from './Post'
-import { usePixelContext } from '../context/context'
 
 const breakpointsObj = {
   default: 4,
@@ -11,8 +10,7 @@ const breakpointsObj = {
   500: 1,
 }
 
-const Content = () => {
-  const { posts } = usePixelContext()
+const Content = ({ posts }) => {
   return (
     <Masonry className="flex" breakpointCols={breakpointsObj}>
       {posts.map((post) => (

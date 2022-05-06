@@ -11,6 +11,8 @@ export const postsQuery = `*[_type == "post" ] | order(_createdAt desc) {
    name,
    _id
   },
+  likes,
+  downloads,
   image{
     asset -> {
      url

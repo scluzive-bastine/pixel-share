@@ -10,9 +10,11 @@ import { usePixelContext } from '../context/context'
 import { fetchCategories, fetchPosts } from '../utils/useFetch'
 import Error from '../components/Error'
 import { PostsLoader } from '../utils/loader'
+import { SinglePost } from '../typings'
+import {restructurePost} from '../utils/functions'
 
 const Home: NextPage = () => {
-  const { getCategories, getPosts, categories } = usePixelContext()
+  const { getCategories, getPosts, categories, posts } = usePixelContext()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -20,6 +22,9 @@ const Home: NextPage = () => {
     fetchCategories(getCategories)
     fetchPosts(setLoading, setError, getPosts)
   }, [])
+
+  const userPosts: SinglePost[] = []
+  restructurePost(posts, userPosts)
 
   return (
     <div className="bg-gray-100">
@@ -53,7 +58,7 @@ const Home: NextPage = () => {
           {error ? (
             <Error message="Error occured trying to load posts!" />
           ) : (
-            <>{loading ? <PostsLoader /> : <Content />}</>
+              <>{loading ? <PostsLoader /> : <Content posts={ userPosts} />}</>
           )}
         </div>
       </main>

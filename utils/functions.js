@@ -41,3 +41,21 @@ export const createComment = async (id, user, comment) => {
     })
     .catch((error) => console.log(error))
 }
+
+export const restructurePost = (posts, arr) => {
+  posts.map((post) => {
+    let likesCount = 0
+    if (post.likes !== null) {
+      likesCount += post.likes.length
+    }
+    arr.push({
+      _id: post._id,
+      name: post.name,
+      description: post.description,
+      image: post.image,
+      likes: likesCount,
+      downloads: post.downloads,
+    })
+  })
+  return arr
+}

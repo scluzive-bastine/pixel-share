@@ -4,6 +4,11 @@ import avatar from '../images/avatar.jpg'
 import Link from 'next/link'
 
 const Post = ({ name, image, likes, description, id }) => {
+  const handleDownload = (e, id) => {
+    e.stopPropagation()
+    download(id)
+  }
+
   return (
     <div className="cursor-pointer">
       <div className="group relative w-full px-2 py-4">
@@ -22,7 +27,13 @@ const Post = ({ name, image, likes, description, id }) => {
           {likes} Likes
         </div>
         <div className="absolute bottom-6 left-4 hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-50 p-2 text-2xl text-teal-600 transition duration-150 ease-in-out group-hover:inline">
-          <MdOutlineFileDownload />
+          <a
+            href={`${image.asset.url}?dl=`}
+            download
+            onClick={(e) => handleDownload(e, id)}
+          >
+            <MdOutlineFileDownload />
+          </a>
         </div>
       </div>
       <div className="flex items-center space-x-2 px-2">
