@@ -21,6 +21,7 @@ const Content = ({ posts }) => {
           likes={post.likes}
           image={post.image}
           id={post._id}
+          postImage={post.postImage}
         />
       ))}
     </Masonry>

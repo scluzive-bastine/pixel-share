@@ -24,6 +24,8 @@ const Home: NextPage = () => {
   }, [])
 
   const userPosts: SinglePost[] = []
+  console.log(posts);
+
   restructurePost(posts, userPosts)
 
   return (

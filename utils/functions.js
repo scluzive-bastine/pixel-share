@@ -55,6 +55,7 @@ export const restructurePost = (posts, arr) => {
       image: post.image,
       likes: likesCount,
       downloads: post.downloads,
+      postImage: post.postedBy.image,
     })
   })
   return arr

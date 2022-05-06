@@ -3,7 +3,7 @@ import { MdOutlineFileDownload } from 'react-icons/md'
 import avatar from '../images/avatar.jpg'
 import Link from 'next/link'
 
-const Post = ({ name, image, likes, description, id }) => {
+const Post = ({ name, image, likes, description, id, postImage }) => {
   const handleDownload = (e, id) => {
     e.stopPropagation()
     download(id)
@@ -37,7 +37,7 @@ const Post = ({ name, image, likes, description, id }) => {
         </div>
       </div>
       <div className="flex items-center space-x-2 px-2">
-        <UserImageComponent image={avatar} />
+        <UserImageComponent image={postImage} />
         <div className="flex-1 overflow-hidden">
           <div className="text-sm">{name}</div>
           <p className="truncate text-xs text-gray-400">{description}</p>

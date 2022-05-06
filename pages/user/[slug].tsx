@@ -25,9 +25,7 @@ const User = ({ user }: Props) => {
   let downloadsCount = 0
   const userPosts: SinglePost[] = []
 
-  restructurePost(posts, userPosts)
-  console.log(posts);
-  
+  restructurePost(posts, userPosts)  
 
   posts.map((post) => {
     if (post.downloads !== null) {
