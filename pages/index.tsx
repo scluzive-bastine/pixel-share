@@ -12,11 +12,16 @@ import Error from '../components/Error'
 import { PostsLoader } from '../utils/loader'
 import { SinglePost } from '../typings'
 import {restructurePost} from '../utils/functions'
+import { useRouter } from 'next/router'
+import Categories from '../components/Categories'
 
 const Home: NextPage = () => {
-  const { getCategories, getPosts, categories, posts } = usePixelContext()
+  const { getCategories, getPosts, posts } = usePixelContext()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
+
+  const router = useRouter()
 
   useEffect(() => {
     fetchCategories(getCategories)
@@ -24,8 +29,6 @@ const Home: NextPage = () => {
   }, [])
 
   const userPosts: SinglePost[] = []
-  console.log(posts);
-
   restructurePost(posts, userPosts)
 
   return (
@@ -41,21 +44,7 @@ const Home: NextPage = () => {
       </header>
 
       <main className="py-4">
-        <div className="relative flex container justify-center">
-          {/* <div className='absolute top-0 left-0 bg-gradient-to-r from-[#ffffff] z-10 h-10 w-1/12' /> */}
-          <div className="flex space-x-2 overflow-x-scroll whitespace-nowrap px-3 text-2xl scrollbar-hide first:pl-24 last:pr-20 md:space-x-6">
-            {categories.map((category: { _id: string, name: string }) => (
-              <div
-                key={category._id}
-                className="cursor-pointer whitespace-nowrap rounded-full border border-teal-600 px-6 py-2 text-center text-sm font-semibold capitalize transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
-              >
-                {category.name}
-              </div>
-            ))}
-          </div>
-          <div className="absolute top-0 right-0 z-10 h-10 w-1/12 bg-gradient-to-l from-[#f3f4f6]" />
-        </div>
-
+        <Categories />
         <div className="mx-auto mt-10 max-w-screen-2xl">
           {error ? (
             <Error message="Error occured trying to load posts!" />
