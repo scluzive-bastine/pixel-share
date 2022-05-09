@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { categoryPostsQuery } from '../../utils/queries'
 import { client } from '../../sanity'
@@ -6,19 +7,42 @@ import Content from '../../components/Content'
 import { restructurePost } from '../../utils/functions'
 import { SinglePost } from '../../typings'
 import Header from "../../components/Header"
+import Categories from '../../components/Categories'
+import { fetchCategories } from '../../utils/useFetch'
+import {usePixelContext} from '../../context/context'
 
-const Category = ({ posts }) => {
+interface Props {
+    posts: SinglePost[]
+}
+const Category = ({ posts }: Props) => {
     const CategoryPosts: SinglePost[] = []
+    const {getCategories} = usePixelContext()
+
     restructurePost(posts, CategoryPosts)
+
+    useEffect(() => {
+        fetchCategories(getCategories)
+    },[])
     
     
   return (
       <div>
-        <header className="bg-gradient-to-r from-cyan-500 to-blue-500">
-            <Header />
+        <header className="h-[300px] bg-gradient-to-r from-cyan-500 to-blue-500">
+              <Header />
+              <div className='mt-10'>
+                  <h1 className='text-center text-3xl text-white font-bold pb-2'>Explore</h1>
+              </div>
           </header>
           <main className="py-4">
-            <Content posts={CategoryPosts} />
+            <Categories />
+              {CategoryPosts.length > 0 ? (
+                  <Content posts={CategoryPosts} />
+              ) : (
+                      <div className="mx-auto mt-10 max-w-screen-2xl">
+                          <h1 className="text-center text-lg text-gray-700">No posts found in the category</h1>
+                  </div>
+              )}
+              
           </main>
     </div>
   )
@@ -36,6 +60,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }`
 
     const categories = await client.fetch(query)
+
     const paths = categories.map((category: Category) => ({
         params: {
             id: category._id
@@ -50,7 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 
-    const query = categoryPostsQuery(params.id)
+    const query = categoryPostsQuery(params?.id)
     const posts = await client.fetch(query, {id: params?.id})
 
     return {

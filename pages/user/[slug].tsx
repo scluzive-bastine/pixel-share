@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { MdLocationOn } from 'react-icons/md'
 import Header from '../../components/Header'
-import avatar from '../../images/avatar.jpg'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { client } from '../../sanity'
 import { User, SinglePost } from '../../typings'
