@@ -64,7 +64,9 @@ const Categories = () => {
           <div
             key={i}
             onClick={() => router.push(`/category/${category._id}`)}
-            className="cursor-pointer snap-start whitespace-nowrap rounded-full border border-teal-600 px-6 py-2 text-center text-sm font-semibold capitalize transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+            className={`cursor-pointer snap-start whitespace-nowrap rounded-full border border-teal-600 px-6 py-2 text-center text-sm font-semibold capitalize transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white ${
+              router.query.id === category._id && 'bg-teal-500 text-white'
+            }`}
           >
             {category.name}
           </div>

@@ -10,6 +10,7 @@ import Header from "../../components/Header"
 import Categories from '../../components/Categories'
 import { fetchCategories } from '../../utils/useFetch'
 import {usePixelContext} from '../../context/context'
+import SearchBar from '../../components/Search'
 
 interface Props {
     posts: SinglePost[]
@@ -29,20 +30,23 @@ const Category = ({ posts }: Props) => {
       <div>
         <header className="h-[300px] bg-gradient-to-r from-cyan-500 to-blue-500">
               <Header />
-              <div className='mt-10'>
-                  <h1 className='text-center text-3xl text-white font-bold pb-2'>Explore</h1>
-              </div>
+              <div className='mx-auto mt-10 max-w-screen-md px-3 lg:px-0'>
+                  <SearchBar />
+                  <h1 className='text-center text-3xl text-white font-bold pb-2 mt-5'>Explore</h1>
+            </div>
           </header>
           <main className="py-4">
             <Categories />
-              {CategoryPosts.length > 0 ? (
-                  <Content posts={CategoryPosts} />
-              ) : (
-                      <div className="mx-auto mt-10 max-w-screen-2xl">
-                          <h1 className="text-center text-lg text-gray-700">No posts found in the category</h1>
-                  </div>
-              )}
-              
+              <div className="mt-10">
+                  {CategoryPosts.length > 0 ? (
+                        <Content posts={CategoryPosts} />
+                    ) : (
+                            <div className="mx-auto mt-10 max-w-screen-2xl">
+                                <h1 className="text-center text-lg text-gray-700">No posts found in the category</h1>
+                        </div>
+                    )}
+            </div>
+              x
           </main>
     </div>
   )

@@ -1,6 +1,6 @@
-import { AiOutlineSearch } from 'react-icons/ai'
 import UserImageComponent from './UserImageComponent'
 import avatar from '../images/avatar.jpg'
+import SearchBar from './Search'
 const Hero = () => {
   return (
     <div className="mx-auto mt-10 max-w-screen-md px-3 lg:px-0">
@@ -12,14 +12,7 @@ const Hero = () => {
           Share, Download, Like, Follow - Be Awesome :)
         </p>
       </div>
-      <div className="mt-10 flex items-center justify-between space-x-2 rounded bg-white px-3 py-1 md:py-2">
-        <AiOutlineSearch className="h-10 text-gray-600" />
-        <input
-          type="text"
-          placeholder="Search for beach, photography, art, couple, etc"
-          className="flex-grow text-sm font-light text-gray-600 outline-none"
-        />
-      </div>
+      <SearchBar />
       <div className="mt-10">
         <div className="text-center text-gray-200">Trending Users</div>
         <div className="flex items-center justify-center space-x-2 py-3 md:space-x-4">

@@ -56,3 +56,31 @@ export const categoryPostsQuery = (categoryId) => {
 `
   return query
 }
+
+export const searchQuery = (searchTerm) => {
+  const query = `*[_type == "post" && name match '${searchTerm}*' || description match '${searchTerm}*' || category->name match '${searchTerm}*']{
+      _id,
+    name,
+    description,
+    category -> {
+    name,
+    _id
+    },
+    likes,
+    downloads,
+    image{
+      asset -> {
+      url
+      }
+    },
+    postedBy -> {
+      _id,
+      name,
+      email,
+      image,
+      bio,
+      socials
+    }
+  }`
+  return query
+}
