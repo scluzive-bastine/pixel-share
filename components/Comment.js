@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import avatar from '../images/avatar.jpg'
 import UserImageComponent from './UserImageComponent'
-import { createComment } from '../utils/functions'
+import { createComment, convertDateToHumanReadable } from '../utils/functions'
 import Error from './alerts/Error'
 import Success from './alerts/Success'
+import { useSession } from 'next-auth/react'
 
 const Comment = ({ id, user, comments }) => {
   const [comment, setComment] = useState('')
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+
+  const { data: session } = useSession()
 
   const details = {
     id,
@@ -69,23 +72,29 @@ const Comment = ({ id, user, comments }) => {
           </button>
         </div>
       </div>
-      <div className="mt-5 h-[500px] overflow-y-scroll rounded px-2 py-4">
-        {comments?.map(({ _id, comment, user: { name, image } }) => (
-          <div
-            className="mb-3 flex space-x-4 border-b border-gray-200 pb-4 last:border-0"
-            key={_id}
-          >
-            <UserImageComponent className="w-1/5" image={image} />
-            <div className="w-4/5">
-              <div className="flex items-center space-x-2">
-                <h1>Sabastine</h1>
-                <span className="text-sm text-gray-500">2 weeks ago</span>
+      {comments.length > 0 && (
+        <div className="mt-5 h-[500px] overflow-y-scroll rounded px-2 py-4">
+          {comments?.map(
+            ({ _id, comment, user: { name, image }, _createdAt }) => (
+              <div
+                className="mb-3 flex space-x-4 border-b border-gray-200 pb-4 last:border-0"
+                key={_id}
+              >
+                <UserImageComponent className="w-1/5" image={image} />
+                <div className="w-4/5">
+                  <div className="flex items-center space-x-2">
+                    <h1>{name}</h1>
+                    <span className="text-sm text-gray-500">
+                      {convertDateToHumanReadable(_createdAt)}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm text-gray-500">{comment}</p>
+                </div>
               </div>
-              <p className="mt-2 text-sm text-gray-500">{comment}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+            )
+          )}
+        </div>
+      )}
       {submitted && <Success message="Comment created!" />}
       {error && <Error message="Fill the form" />}
     </div>

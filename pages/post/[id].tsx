@@ -137,7 +137,6 @@ const Post = ({ post }: Props) => {
                         </div>
                           <Comment id={post._id} user={token} comments={comments} />
                       </div>
-
                   </div>
               </div>
           </main>
