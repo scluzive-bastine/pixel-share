@@ -80,16 +80,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const query = categoryPostsQuery(params?.id)
     const posts = await client.fetch(query, { id: params?.id })
-    
-    const session = await getSession(params)
-    if (!session) {
-        return {
-            redirect: {
-                destination: '/auth/signin',
-                permanent: false,
-            }
-        }
-    }
 
     return {
         props: {
