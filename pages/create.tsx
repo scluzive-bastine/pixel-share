@@ -7,7 +7,7 @@ import { FaTimes } from 'react-icons/fa'
 
 import { client } from '../sanity'
 import Image from 'next/image'
-import { useSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 
 import { usePixelContext } from '../context/context'
 import { fetchCategories } from '../utils/useFetch'
@@ -15,6 +15,7 @@ import { fetchCategories } from '../utils/useFetch'
 import Loader from '../components/Loader'
 import Success from '../components/alerts/Success'
 import Error from '../components/alerts/Error'
+import { GetServerSideProps } from 'next'
 
 
 interface IPost {
@@ -222,7 +223,7 @@ const Create = () => {
                   onChange={(e) => setPost({...post, description: e.target.value})}
                 ></textarea>
               </div>
-            <button className='bg-green-600 text-white px-2 py-2 rounded w-[150px] uppercase text-sm' onClick={savePost} disabled={savingPost}>{  savingPost ? 'saving...' : "Submit" }</button>
+            <button className='bg-green-600 text-white px-4 py-3 rounded w-[150px] uppercase text-sm disabled:bg-gray-200' onClick={savePost} disabled={savingPost || !post.name || !post.category || !post.description}>{  savingPost ? 'saving...' : "Submit" }</button>
           </div>
           {/* </form> */}
           <div className="hidden md:inline">
@@ -265,3 +266,22 @@ const Create = () => {
 }
 
 export default Create
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
+    
+}

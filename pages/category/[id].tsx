@@ -11,6 +11,7 @@ import Categories from '../../components/Categories'
 import { fetchCategories } from '../../utils/useFetch'
 import {usePixelContext} from '../../context/context'
 import SearchBar from '../../components/Search'
+import { getSession } from 'next-auth/react'
 
 interface Props {
     posts: SinglePost[]
@@ -77,6 +78,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+
+    const session = await getSession(params)
+      if (!session) {
+        return {
+            redirect: {
+                destination: '/auth/signin',
+                permanent: false,
+            }
+        }
+    }
 
     const query = categoryPostsQuery(params?.id)
     const posts = await client.fetch(query, {id: params?.id})

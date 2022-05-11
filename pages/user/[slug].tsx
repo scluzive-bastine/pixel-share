@@ -5,7 +5,7 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import { client } from '../../sanity'
 import { User, SinglePost } from '../../typings'
 import Content from '../../components/Content'
-import { useSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import { followUser, restructurePost } from '../../utils/functions'
 import { useState } from 'react'
 import SettingsModal from '../../components/SettingsModal'
@@ -27,8 +27,18 @@ const User = ({ user }: Props) => {
 
   let downloadsCount = 0
   const userPosts: SinglePost[] = []
+  const myPosts: SinglePost[] = []
 
-  restructurePost(posts, userPosts)  
+  posts.map((post) => {
+    if (post.postedBy._id === token) {
+      myPosts.push(post)
+    }
+  })  
+
+
+  restructurePost(myPosts, userPosts)  
+
+
 
   posts.map((post) => {
     if (post.downloads !== null) {
@@ -48,7 +58,7 @@ const User = ({ user }: Props) => {
 
   const handleModalClose = () => {
     setIsModalOpen(false)
-  }  
+  }    
 
   
   
@@ -160,7 +170,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+
+    const session = await getSession(params)
+      if (!session) {
+        return {
+            redirect: {
+                destination: '/auth/signin',
+                permanent: false,
+            }
+        }
+    }
 
   const query = `*[_type == "user" && slug == $slug][0] {
     _id,

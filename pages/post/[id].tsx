@@ -10,7 +10,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { client } from '../../sanity'
 import { convertDateToHumanReadable, likePost, followUser, download } from '../../utils/functions' 
-import { useSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import ShareButtons from '../../components/ShareButtons'
 
 import {Post} from '../../typings'
@@ -170,6 +170,16 @@ export const getStaticPaths: GetStaticPaths  = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+
+    const session = await getSession(params)
+      if (!session) {
+        return {
+            redirect: {
+                destination: '/auth/signin',
+                permanent: false,
+            }
+        }
+    }
 
     const query = `*[_type == "post" && _id == $id][0] {
         _id,

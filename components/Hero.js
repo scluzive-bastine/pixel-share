@@ -13,7 +13,7 @@ const Hero = () => {
         </p>
       </div>
       <SearchBar />
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <div className="text-center text-gray-200">Trending Users</div>
         <div className="flex items-center justify-center space-x-2 py-3 md:space-x-4">
           <UserImageComponent image={avatar} />
@@ -21,7 +21,7 @@ const Hero = () => {
           <UserImageComponent image={avatar} />
           <UserImageComponent image={avatar} />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

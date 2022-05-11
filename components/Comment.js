@@ -47,31 +47,33 @@ const Comment = ({ id, user, comments }) => {
       <div className="border-b border-gray-200 pb-2">
         <h1 className="text-lg text-gray-700">Comments</h1>
       </div>
-      <div className="mt-4 flex space-x-4">
-        <UserImageComponent className="w-1/5" image={avatar} />
-        <div className="w-4/5 flex-grow">
-          <textarea
-            type="text"
-            rows={2}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Add a comment..."
-            className="inline-block w-full rounded border border-gray-300 px-2
+      {session ? (
+        <div className="mt-4 flex space-x-4">
+          <UserImageComponent className="w-1/5" image={avatar} />
+          <div className="w-4/5 flex-grow">
+            <textarea
+              type="text"
+              rows={2}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="inline-block w-full rounded border border-gray-300 px-2
             py-1 align-top text-sm text-gray-700 outline-none transition duration-150 ease-in-out focus:border-gray-400"
-          ></textarea>
-          <button
-            className={`float-right mt-2 rounded ${
-              comment
-                ? 'bg-teal-600 text-white hover:bg-teal-700 '
-                : 'bg-gray-300 text-black'
-            } px-4 py-2 text-sm transition duration-150 ease-in-out `}
-            disabled={!comment}
-            onClick={handleCreateComment}
-          >
-            {loading ? 'Loading...' : 'Submit'}
-          </button>
+            ></textarea>
+            <button
+              className={`float-right mt-2 rounded ${
+                comment
+                  ? 'bg-teal-600 text-white hover:bg-teal-700 '
+                  : 'bg-gray-300 text-black'
+              } px-4 py-2 text-sm transition duration-150 ease-in-out `}
+              disabled={!comment}
+              onClick={handleCreateComment}
+            >
+              {loading ? 'Loading...' : 'Submit'}
+            </button>
+          </div>
         </div>
-      </div>
+      ) : null}
       {comments.length > 0 && (
         <div className="mt-5 h-[500px] overflow-y-scroll rounded px-2 py-4">
           {comments?.map(

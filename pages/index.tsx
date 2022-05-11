@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { useState } from 'react'
 import Head from 'next/head'
 import { Key, ReactChild, ReactFragment, ReactPortal, useEffect } from 'react'
@@ -14,7 +14,7 @@ import { SinglePost } from '../typings'
 import {restructurePost} from '../utils/functions'
 import { useRouter } from 'next/router'
 import Categories from '../components/Categories'
-import { useSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 
 const Home: NextPage = () => {
   const { getCategories, getPosts, posts, getUser } = usePixelContext()
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="h-[500px] bg-gradient-to-r from-cyan-500 to-blue-500 md:h-[550px]">
+      <header className="h-[300px] bg-gradient-to-r from-cyan-500 to-blue-500 md:h-[550px]">
         <Header />
         <Hero />
       </header>
@@ -63,3 +63,22 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
+    
+}

@@ -48,13 +48,12 @@ const UserDropdownMenu = ({ clickOutside, show, session }) => {
           >
             Create a pixel
           </div>
-          <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-100">
-            Settings
-          </div>
           <div className="mt-4 border-t border-gray-200 pt-2">
             <div
               className="cursor-pointer rounded-lg p-2 hover:bg-red-100"
-              onClick={signOut}
+              onClick={() => {
+                signOut({ callbackUrl: '/auth/signin' })
+              }}
             >
               Logout
             </div>
