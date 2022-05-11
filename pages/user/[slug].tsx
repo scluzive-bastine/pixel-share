@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { MdLocationOn } from 'react-icons/md'
 import Header from '../../components/Header'
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import { client } from '../../sanity'
 import { User, SinglePost } from '../../typings'
 import Content from '../../components/Content'
@@ -171,16 +171,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-
-    const session = await getSession(params)
-      if (!session) {
-        return {
-            redirect: {
-                destination: '/auth/signin',
-                permanent: false,
-            }
-        }
-    }
 
   const query = `*[_type == "user" && slug == $slug][0] {
     _id,

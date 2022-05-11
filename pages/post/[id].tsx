@@ -6,7 +6,7 @@ import avatar from '../../images/avatar.jpg'
 import { MdDownload } from 'react-icons/md'
 import { BsHeartFill } from 'react-icons/bs'
 
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 
 import { client } from '../../sanity'
 import { convertDateToHumanReadable, likePost, followUser, download } from '../../utils/functions' 
@@ -170,16 +170,6 @@ export const getStaticPaths: GetStaticPaths  = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-
-    const session = await getSession(params)
-      if (!session) {
-        return {
-            redirect: {
-                destination: '/auth/signin',
-                permanent: false,
-            }
-        }
-    }
 
     const query = `*[_type == "post" && _id == $id][0] {
         _id,

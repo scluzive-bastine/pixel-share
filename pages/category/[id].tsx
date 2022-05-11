@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import { categoryPostsQuery } from '../../utils/queries'
 import { client } from '../../sanity'
 import Content from '../../components/Content'
@@ -78,9 +78,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-
+    const query = categoryPostsQuery(params?.id)
+    const posts = await client.fetch(query, { id: params?.id })
+    
     const session = await getSession(params)
-      if (!session) {
+    if (!session) {
         return {
             redirect: {
                 destination: '/auth/signin',
@@ -88,9 +90,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             }
         }
     }
-
-    const query = categoryPostsQuery(params?.id)
-    const posts = await client.fetch(query, {id: params?.id})
 
     return {
         props: {
