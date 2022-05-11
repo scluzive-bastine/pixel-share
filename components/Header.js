@@ -4,6 +4,7 @@ import UserDropdownMenu from './UserDropdownMenu'
 import UserImageComponent from './UserImageComponent'
 import { useRouter } from 'next/router'
 import { useSession, signIn } from 'next-auth/react'
+import { client } from '../sanity'
 
 const Header = () => {
   const [showUserMenu, setShowUserMenu] = useState(false)
@@ -14,6 +15,7 @@ const Header = () => {
   const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu)
   }
+
   return (
     <div className="mx-auto max-w-screen-2xl">
       <div className="flex items-center justify-between py-3 px-2 md:px-6 md:py-3">

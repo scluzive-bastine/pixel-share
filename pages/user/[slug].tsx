@@ -8,6 +8,9 @@ import Content from '../../components/Content'
 import { useSession } from 'next-auth/react'
 import { followUser, restructurePost } from '../../utils/functions'
 import { useState } from 'react'
+import SettingsModal from '../../components/SettingsModal'
+import { BsTwitter } from 'react-icons/bs'
+import { AiFillInstagram } from 'react-icons/ai'
 
 interface Props {
   user: User
@@ -17,6 +20,7 @@ interface Props {
 const User = ({ user }: Props) => {
   const { data: session } = useSession()
   const token = session?.session?.token || ''
+  const [isModalOpen, setIsModalOpen] = useState(false)
   
   const { image, name, bio, followers, posts, _id, location } = user
   const followed = !!followers?.filter((follower: any) => follower._ref === token)
@@ -38,6 +42,15 @@ const User = ({ user }: Props) => {
     }
   }
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+  }  
+
+  
   
   return (
     <div>
@@ -57,7 +70,7 @@ const User = ({ user }: Props) => {
                   className="rounded-full border border-teal-600"
                 />
               </div>
-              <div className="text-semibold mt-2 text-center">{ name}</div>
+                <div className="text-semibold mt-2 text-center">{name}</div>
               <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
                 {location ? (
                   <>
@@ -66,11 +79,27 @@ const User = ({ user }: Props) => {
                   </>
                 ) : null}
               </div>
-              <div className="mt-2 flex items-center justify-center">
-                <button className={`bg-teal-500 text-white rounded capitalize text-xs px-3 py-1 ${!followed ? 'hover:bg-teal-600' : " "} transition duration-150 ease-in-out`} onClick={() => handleFollow(_id, token)}>{ !followed ? 'Follow' : 'Following'}</button>
+              <div className="flex items-center justify-center mt-4 space-x-2">
+                {user.twitter ? (
+                  <a href={user.twitter} target="_blank" rel="noopener noreferrer">
+                    <BsTwitter className='text-2xl text-teal-700 hover:text-teal-800' />
+                  </a>
+                ): null}
+                {user.instagram ? (
+                  <a href={user.instagram} target="_blank" rel="noopener noreferrer">
+                  <AiFillInstagram className='text-2xl text-teal-700 hover:text-teal-800' />
+                  </a>
+                ): null}
               </div>
+              {
+                token !== _id && (
+                  <div className="mt-3 flex items-center justify-center">
+                    <button className={`bg-teal-500 text-white rounded capitalize text-xs px-3 py-1 ${!followed ? 'hover:bg-teal-600' : " "} transition duration-150 ease-in-out`} onClick={() => handleFollow(_id, token)}>{ !followed ? 'Follow' : 'Following'}</button>
+                  </div>
+                )
+              }
               <p className="mt-4 max-w-screen-md text-center text-gray-500">
-                { bio}
+                {bio}
               </p>
               <div className="mt-3 flex justify-center space-x-4 text-sm text-gray-500">
                 <div>
@@ -80,6 +109,12 @@ const User = ({ user }: Props) => {
                   <span className="font-bold text-black">{ downloadsCount} </span> Downloads
                 </div>
               </div>
+              {token === _id && (
+                <div className="flex justify-center mt-4">
+                  <button className='rounded px-3 py-1 text-blue-600 border border-blue-500 hover:bg-blue-600 hover:text-white hover:underline font-semibold hover transition duration-150 ease-in-out' onClick={handleModalOpen}>Edit profile</button>
+                </div>
+                  
+                )}
             </div>
           </div>
         </div>
@@ -88,9 +123,12 @@ const User = ({ user }: Props) => {
         <div className="text-center text-3xl font-bold">Posts</div>
         <Content posts={userPosts} />
       </div>
+      <SettingsModal isOpen={isModalOpen} handleClose={handleModalClose} user={user} />
     </div>
   )
 }
+
+// We are type and graphic design studio. Our specialists are logo design, lettering, branding, typeface design and illustration. Also focus to elevate projects for great people.
 
 export default User
 
@@ -98,23 +136,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   interface User {
     _id: string
-    slug: {
-      current: string
-    }
+    slug: string
   }
 
   const query = `*[_type == "user"] {
     _id,
-    slug {
-      current
-    }
+    slug 
   }`
 
   const user = await client.fetch(query)
 
   const paths = user.map((user: User) => ({
     params: {
-      slug: user?.slug.current,
+      slug: user?.slug,
     },
   }))
 
@@ -128,13 +162,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
 
-  const query = `*[_type == "user" && slug.current == $slug][0] {
+  const query = `*[_type == "user" && slug == $slug][0] {
     _id,
     name,
     bio,
     followers,
     location,
     image,
+    instagram,
+    twitter,
     'posts': *[_type == "post" && references(^._id)] {
       _id,
       name,
@@ -153,8 +189,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
         email,
         image,
         bio,
-        socials,
-        followers
+        followers,
+        instagram,
+        twitter,
       },
     }
   }`

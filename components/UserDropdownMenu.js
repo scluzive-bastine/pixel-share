@@ -7,7 +7,7 @@ const UserDropdownMenu = ({ clickOutside, show, session }) => {
   const ref = useRef(null)
   const router = useRouter()
   const {
-    user: { name, email, image },
+    user: { name, email, image, slug },
   } = session
 
   useEffect(() => {
@@ -30,7 +30,10 @@ const UserDropdownMenu = ({ clickOutside, show, session }) => {
     >
       <div>
         <span className="text-xs text-gray-500">Signed in </span>
-        <div className="flex items-center space-x-2 rounded-lg px-2 py-3 transition duration-150 ease-in-out hover:bg-gray-100">
+        <div
+          className="flex cursor-pointer items-center space-x-2 rounded-lg px-2 py-3 transition duration-150 ease-in-out hover:bg-gray-100"
+          onClick={() => router.push(`/user/${slug}`)}
+        >
           <UserImageComponent image={image} />
           <div>
             <div className="truncate font-semibold text-black">{name}</div>
@@ -44,6 +47,9 @@ const UserDropdownMenu = ({ clickOutside, show, session }) => {
             onClick={() => router.push('/create')}
           >
             Create a pixel
+          </div>
+          <div className="cursor-pointer rounded-lg p-2 hover:bg-gray-100">
+            Settings
           </div>
           <div className="mt-4 border-t border-gray-200 pt-2">
             <div

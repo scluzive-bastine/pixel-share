@@ -24,14 +24,12 @@ const Post = ({ post }: Props) => {
     const { data: session } = useSession()
     const token = session?.session?.token || ''
 
-    // const userName = session?.session.session.user.name
-
     const { likes, postedBy, downloads, name, description, comments } = post
     
     const router = useRouter()
     
-    const liked = !!likes?.filter((like: any) => like.postedBy._ref === token)
-    const followed = !!postedBy.followers?.filter((follower: any) => follower._ref === token)
+    const liked = !!likes?.filter((like: any) => like.postedBy._ref === token)?.length
+    const followed = !!postedBy.followers?.filter((follower: any) => follower._ref === token)?.length
 
     const handleLike = (id: string, userId: string) => {
         if (!liked) {
@@ -40,7 +38,7 @@ const Post = ({ post }: Props) => {
     }  
     
     const handleFollow = (user: string, followed: string) => {
-        if (!followed) {
+        if (!followed && token !== postedBy._id) {
             followUser(user, followed)
         }
     }
@@ -123,12 +121,14 @@ const Post = ({ post }: Props) => {
                         </div>
                         </div>
                         <div className='border border-gray-300 rounded-3xl px-3 py-4 w-full'>
-                            <div className="relative h-[80px] w-[80px] rounded-full mx-auto cursor-pointer hover:shadow-lg transition duration-150 ease-in-out" onClick={() => router.push(`/user/${postedBy.slug.current}`)}>
+                            <div className="relative h-[80px] w-[80px] rounded-full mx-auto cursor-pointer hover:shadow-lg transition duration-150 ease-in-out" onClick={() => router.push(`/user/${postedBy.slug}`)}>
                                 <Image src={post.postedBy.image} layout="fill" objectFit='cover' className='rounded-full' />
                             </div>
-                            <div className="flex justify-center my-4">
-                                <button className={`bg-teal-500 text-white rounded capitalize text-xs px-3 py-1 ${!followed ? 'hover:bg-teal-600' : " "} transition duration-150 ease-in-out`} onClick={() => handleFollow(post.postedBy._id, token)}>{ !followed ? 'Follow' : 'Following'}</button>
-                            </div>
+                              {token !== postedBy._id && (
+                                <div className="flex justify-center my-4">
+                                    <button className={`bg-teal-500 text-white rounded capitalize text-xs px-3 py-1 ${!followed ? 'hover:bg-teal-600' : " "} transition duration-150 ease-in-out`} onClick={() => handleFollow(post.postedBy._id, token)}>{ !followed ? 'Follow' : 'Following'}</button>
+                                </div>
+                              )}
                             <div className='text-center'>
                                 <h1 className='text-xl text-black font-semibold'>{post.postedBy.name}</h1>
                                 <span className='text-gray-500'>Followers: { postedBy.followers?.length > 0 ? postedBy.followers.length: 0}</span>

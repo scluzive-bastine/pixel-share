@@ -19,10 +19,18 @@ const AppActions = () => {
     })
   }
 
+  const getUser = (data) => {
+    dispatch({
+      type: 'SET_USER',
+      payload: data,
+    })
+  }
+
   return {
     state,
     getCategories,
     getPosts,
+    getUser,
   }
 }
 
@@ -32,6 +40,7 @@ const PixelProvider = ({ children }) => {
   const value = {
     categories: state.categories,
     posts: state.posts,
+    user: state.user,
     ...props,
   }
 

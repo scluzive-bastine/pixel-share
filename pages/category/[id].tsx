@@ -46,7 +46,6 @@ const Category = ({ posts }: Props) => {
                         </div>
                     )}
             </div>
-              x
           </main>
     </div>
   )

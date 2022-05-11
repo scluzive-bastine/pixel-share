@@ -7,24 +7,29 @@ import Content from '../components/Content'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
 import { usePixelContext } from '../context/context'
-import { fetchCategories, fetchPosts } from '../utils/useFetch'
+import { fetchCategories, fetchPosts, fetchUser } from '../utils/useFetch'
 import Error from '../components/Error'
 import { PostsLoader } from '../utils/loader'
 import { SinglePost } from '../typings'
 import {restructurePost} from '../utils/functions'
 import { useRouter } from 'next/router'
 import Categories from '../components/Categories'
+import { useSession } from 'next-auth/react'
 
 const Home: NextPage = () => {
-  const { getCategories, getPosts, posts } = usePixelContext()
+  const { getCategories, getPosts, posts, getUser } = usePixelContext()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
+  const { data: session } = useSession()
+  const token = session?.session?.token || ''
 
 
   const router = useRouter()
 
   useEffect(() => {
     fetchCategories(getCategories)
+    fetchUser(token, getUser)
     fetchPosts(setLoading, setError, getPosts)
   }, [])
 

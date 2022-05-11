@@ -14,22 +14,30 @@ export default NextAuth({
   callbacks: {
     session: async (session) => {
       // Store user data in session
+      const username = session.session.user.name.split(' ')
+      const slug = username[0].toLowerCase() + '-' + username[1].toLowerCase()
+
       session.token = session.token.sub
+      session.session.user.slug = slug
+
+      // const slug = session.
       const user = {
-        _id: session.token.sub,
+        _id: session.token,
         _type: 'user',
         name: session.session.user.name,
         email: session.session.user.email,
         image: session.session.user.image,
+        slug: slug,
       }
-      //   client
-      //     .createIfNotExists(user)
-      //     .then(() => {
-      //       console.log('User created')
-      //     })
-      //     .catch((error) => {
-      //       console.log(error)
-      //     })
+      // client
+      //   .createIfNotExists(user)
+      //   .then(() => {
+      //     // console.log('User created')
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
+
       return { session }
     },
   },

@@ -1,16 +1,16 @@
 export default {
   name: 'social',
   title: 'Social',
-  type: 'object',
+  type: 'document',
   fields: [
     {
-      name: 'name',
-      title: 'Name',
+      name: 'instagram',
+      title: 'Instagram',
       type: 'string',
     },
     {
-      name: 'link',
-      title: 'Link',
+      name: 'twitter',
+      title: 'Twitter',
       type: 'string',
     },
   ],

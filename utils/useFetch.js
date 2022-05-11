@@ -21,4 +21,23 @@ const fetchPosts = async (setLoading, setError, setData) => {
   }
 }
 
-export { fetchCategories, fetchPosts }
+const fetchUser = async (id, setData) => {
+  const query = `*[_type == "user" && _id == '${id}'] {
+      name,
+      email,
+      image,
+      bio,
+      social {
+        twitter,
+        instagram,
+      },
+    }`
+  try {
+    const data = await client.fetch(query)
+    setData(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export { fetchCategories, fetchPosts, fetchUser }

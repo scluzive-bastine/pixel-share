@@ -47,6 +47,8 @@ export interface User {
   location: string
   followers: []
   image: string
+  instagram: string
+  twitter: string
   posts: {
     map(arg0: (post: any) => void)
     _id: string

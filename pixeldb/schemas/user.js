@@ -11,11 +11,7 @@ export default {
     {
       name: 'slug',
       title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-      },
+      type: 'string',
     },
     {
       name: 'email',
@@ -44,15 +40,14 @@ export default {
       of: [{ type: 'followers' }],
     },
     {
-      name: 'socials',
-      title: 'Social',
-      type: 'array',
-      of: [
-        {
-          title: 'Social',
-          type: 'social',
-        },
-      ],
+      name: 'instagram',
+      title: 'Instagram',
+      type: 'string',
+    },
+    {
+      name: 'twitter',
+      title: 'Twitter',
+      type: 'string',
     },
   ],
 }
