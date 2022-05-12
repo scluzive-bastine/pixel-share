@@ -42,7 +42,7 @@ const Categories = () => {
   }, [])
 
   return (
-    <div className="container relative flex items-center justify-center">
+    <div className="container relative hidden items-center justify-center md:flex">
       {categories.length > 0 && (
         <>
           <div
