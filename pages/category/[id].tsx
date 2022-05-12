@@ -32,8 +32,8 @@ const Category = ({ posts }: Props) => {
         <header className="h-[300px] bg-gradient-to-r from-cyan-500 to-blue-500">
               <Header />
               <div className='mx-auto mt-10 max-w-screen-md px-3 lg:px-0'>
-                  <SearchBar />
                   <h1 className='text-center text-3xl text-white font-bold pb-2 mt-5'>Explore</h1>
+                  <SearchBar />
             </div>
           </header>
           <main className="py-4">
