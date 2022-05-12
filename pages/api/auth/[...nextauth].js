@@ -29,14 +29,14 @@ export default NextAuth({
         image: session.session.user.image,
         slug: slug,
       }
-      // client
-      //   .createIfNotExists(user)
-      //   .then(() => {
-      //     // console.log('User created')
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
+      client
+        .createIfNotExists(user)
+        .then(() => {
+          // console.log('User created')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
 
       return { session }
     },

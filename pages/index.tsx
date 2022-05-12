@@ -48,7 +48,7 @@ const Home: NextPage = () => {
         <Hero />
       </header>
 
-      <main className="py-10">
+      <main className="pt-4 pb-10">
         <Categories />
         <div className="mx-auto mt-10 max-w-screen-2xl overflow-hidden">
           {error ? (
