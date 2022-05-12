@@ -43,14 +43,14 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="h-[300px] bg-gradient-to-r from-cyan-500 to-blue-500 md:h-[550px]">
+      <header className="h-[400px] bg-gradient-to-r from-cyan-500 to-blue-500 md:h-[550px]">
         <Header />
         <Hero />
       </header>
 
       <main className="py-4">
         <Categories />
-        <div className="mx-auto mt-10 max-w-screen-2xl">
+        <div className="mx-auto mt-10 max-w-screen-2xl overflow-hidden">
           {error ? (
             <Error message="Error occured trying to load posts!" />
           ) : (

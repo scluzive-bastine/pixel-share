@@ -3,8 +3,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Header from '../../components/Header'
 import avatar from '../../images/avatar.jpg'
-import { MdDownload } from 'react-icons/md'
+import { MdDownload, MdOutlineDownloadForOffline, MdMoreHoriz } from 'react-icons/md'
 import { BsHeartFill } from 'react-icons/bs'
+import { Popover } from '@headlessui/react'
+
 
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 
@@ -53,12 +55,12 @@ const Post = ({ post }: Props) => {
         <header className="bg-gradient-to-r from-cyan-500 to-blue-500">
             <Header />
           </header>
-          <main className="mx-auto max-w-screen-xl pb-20">
+          <main className="mx-auto max-w-screen-xl pb-20 overflow-hidden">
               <div className="mt-5 bg-white p-3 md:p-10 h-full md:rounded-3xl">
                   <div className="block md:flex space-x-10">
                       <div className='w-full md:w-2/3'>
                           <h1 className='text-3xl font-semibold text-black mb-2'>{ name}</h1>
-                          <div className='flex space-x-10 md:space-x-10 mt-4 mb-10 w-full'>
+                          <div className='md:flex space-x-10 md:space-x-10 mt-4 mb-10 w-full hidden '>
                               <div>
                                   <h1 className='text-sm md:text-lg font-semibold text-black'>Downloads</h1>
                                   <span className='text-sm text-gray-600'>{ downloads?.length > 0 ? downloads.length: "0"}</span>
@@ -79,17 +81,26 @@ const Post = ({ post }: Props) => {
                           <div className="relative my-5">
                               <img src={ post.image.asset.url} alt="image-name" loading='lazy' className='rounded-3xl m' />
                           </div>
-                            <div className="flex md:hidden space-x-10  justify-between my-5 bg-gray-100 px-3 py-2">
-                              <div className='flex space-x-4 items-center'>
-                                  <BsHeartFill className={`text-xl ${!liked ? 'text-gray-200 hover:text-red-200 ' : 'text-red-600'} cursor-pointer transition duration-150 ease-in-out`} onClick={() => handleLike(post._id, token)} />
-                                    <a href={`${post?.image.asset.url}?dl=`}
-                                      download
-                                      onClick={(e) => handleDownload(e, post._id)}>
-                                  <MdDownload className='text-3xl text-blue-600 hover:text-blue-700 cursor-pointer'/>
-                                </a>
-                             </div>
-                              <ShareButtons title={name} id={ post._id} />
-                          </div>
+                            <div className="flex md:hidden pl-0 md:space-x-10 justify-between mt-2 md:my-5 px-3 py-2">
+                                <div className='flex space-x-4 items-center'>
+                                    <BsHeartFill className={`text-xl ${!liked ? 'text-gray-200 hover:text-red-200 ' : 'text-red-600'} cursor-pointer transition duration-150 ease-in-out`} onClick={() => handleLike(post._id, token)} />
+                                        <a href={`${post?.image.asset.url}?dl=`}
+                                        download
+                                        onClick={(e) => handleDownload(e, post._id)}>
+                                    <MdOutlineDownloadForOffline className='text-2xl text-teal-500 hover:text-teal-500 cursor-pointer'/>
+                                    </a>
+                                </div>
+                                <Popover className="relative">
+                                    <Popover.Button className="outline-none active:outline-none focus:outline-none">
+                                      <MdMoreHoriz className='text-2xl' />
+                                    </Popover.Button>
+
+                                    <Popover.Panel className="absolute z-10 -left-36 border border-gray-200 w-[180px] bg-white px-3 py-2 rounded-md">
+                                        <ShareButtons title={name} id={ post._id} />
+                                    </Popover.Panel>
+                                </Popover>
+                            </div>
+                          <div className='text-sm text-gray-600 flex md:hidden mb-4'>{ likes ? likes.length : "0"} Likes</div> 
                           <p className=' text-gray-500'>
                               { description}
                           </p>
