@@ -27,7 +27,6 @@ const Comment = ({ id, user, comments }) => {
         body: JSON.stringify(details),
       })
         .then((res) => {
-          console.log(res)
           setComment('')
           setSubmitted(true)
           setTimeout(() => {
@@ -49,7 +48,10 @@ const Comment = ({ id, user, comments }) => {
       </div>
       {session ? (
         <div className="mt-4 flex space-x-4">
-          <UserImageComponent className="w-1/5" image={avatar} />
+          <UserImageComponent
+            className="w-1/5"
+            image={session?.session.session.user.image}
+          />
           <div className="w-4/5 flex-grow">
             <textarea
               type="text"

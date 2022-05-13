@@ -17,13 +17,14 @@ export default async function FollowUser(
     res: NextApiResponse
 ) {
 
-    const { user, follower } = JSON.parse(req.body);
+    const { user, id } = JSON.parse(req.body);
+    
         client.patch(user).setIfMissing({ followers: [] }).insert('after', 'followers[-1]', [{
         followers: 1,
         _key: uuidv4(),
         user: {
             _type: 'reference',
-            _ref: follower
+            _ref: id
         }
     }]).commit()
     .then((data) => {

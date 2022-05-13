@@ -4,19 +4,19 @@ export const convertDateToHumanReadable = (date) => {
   return moment(date).format('LL')
 }
 
-export const likePost = async (id, user) => {
+export const likePost = async (id, userId) => {
   const response = await fetch(`/api/like-post/`, {
     method: 'POST',
-    body: JSON.stringify({ id, user }),
+    body: JSON.stringify({ id, userId }),
   })
     .then((res) => window.location.reload())
     .catch((error) => console.log(error))
 }
 
-export const followUser = async (user, follower) => {
+export const followUser = async (user, id) => {
   const response = await fetch(`/api/follow-user/`, {
     method: 'POST',
-    body: JSON.stringify({ user, follower }),
+    body: JSON.stringify({ user, id }),
   })
     .then((res) => console.log(res))
     .catch((error) => console.log(error))

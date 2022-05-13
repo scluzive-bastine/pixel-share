@@ -50,6 +50,7 @@ export interface User {
   instagram: string
   twitter: string
   posts: {
+    [x: string]: any
     map(arg0: (post: any) => void)
     _id: string
     name: string

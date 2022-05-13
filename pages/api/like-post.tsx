@@ -16,14 +16,14 @@ export default async function likePost(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { id, user } = JSON.parse(req.body)
+    const { id, userId } = JSON.parse(req.body)
 
     client.patch(id).setIfMissing({ likes: [] }).insert('after', 'likes[-1]', [{
         likes: 1,
         _key: uuidv4(),
         postedBy: {
             _type: 'reference',
-            _ref: user
+            _ref: userId
         }
     }]).commit()
     .then((data) => {

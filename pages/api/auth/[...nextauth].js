@@ -20,7 +20,6 @@ export default NextAuth({
       session.token = session.token.sub
       session.session.user.slug = slug
 
-      // const slug = session.
       const user = {
         _id: session.token,
         _type: 'user',

@@ -4,28 +4,41 @@ export const categoriesQuery = `*[_type == "category"] {
 }`
 
 export const postsQuery = `*[_type == "post" ] | order(_createdAt desc) {
-  _id,
-  name,
-  description,
-  category -> {
-   name,
-   _id
-  },
-  likes,
-  downloads,
-  image{
-    asset -> {
-     url
-    }
-  },
-  postedBy -> {
-     _id,
-    name,
-    email,
-    image,
-    bio,
-    socials
-  }
+        _id,
+        name,
+        description,
+        _createdAt,
+        category -> {
+            name,
+            _id
+        },
+        image{
+            asset -> {
+                url
+            }
+        },
+        postedBy -> {
+            _id,
+            slug,
+            name,
+            email,
+            image,
+            bio,
+            socials,
+            followers
+        },
+        likes,
+        downloads,
+        "comments": *[_type == 'comment' && references(^._id)] {
+          _id,
+          _createdAt,
+          comment,
+          user -> {
+            _id,
+            name,
+            image
+          }
+        }
 }`
 
 export const categoryPostsQuery = (categoryId) => {

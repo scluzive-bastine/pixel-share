@@ -7,7 +7,7 @@ import { User, SinglePost } from '../../typings'
 import Content from '../../components/Content'
 import { getSession, useSession } from 'next-auth/react'
 import { followUser, restructurePost } from '../../utils/functions'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SettingsModal from '../../components/SettingsModal'
 import { BsTwitter } from 'react-icons/bs'
 import { AiFillInstagram } from 'react-icons/ai'
@@ -21,6 +21,7 @@ const User = ({ user }: Props) => {
   const { data: session } = useSession()
   const token = session?.session?.token || ''
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [post, setPost] = useState(null)
   
   const { image, name, bio, followers, posts, _id, location } = user
   const followed = !!followers?.filter((follower: any) => follower._ref === token)
@@ -29,16 +30,63 @@ const User = ({ user }: Props) => {
   const userPosts: SinglePost[] = []
   const myPosts: SinglePost[] = []
 
-  posts.map((post) => {
-    if (post.postedBy._id === token) {
-      myPosts.push(post)
+  // posts.map((post) => {
+  //   if (post.postedBy._id === token) {
+  //     myPosts.push(post)
+  //   } else {
+  //     myPosts.push(post)
+  //   }
+  // })
+
+  // posts.filter((post: any) => {
+  //   if (post.postedBy._id === token) {
+  //     myPosts.push(post)
+  //   } else {
+  //     myPosts.push(post)
+  //   }
+  // })
+
+  // console.log(posts);
+
+   const query = `*[_type == "post" && postedBy._ref == "${_id}"] {
+      _id,
+      name,
+      description,
+      likes,
+      downloads,
+      image{
+        asset -> {
+            url
+        }
+      },
+      postedBy -> {
+        _id,
+        slug,
+        name,
+        email,
+        image,
+        bio,
+        socials,
+        followers
+      },
+  }`
+
+  const fetchPost = async () => {
+    try {
+      const data = await client.fetch(query) 
+      setPost(data)
+    } catch (error) {
+      console.log(error)
     }
-  })  
+  }
 
+  useEffect(() => {
+    fetchPost()
+  }, [])  
 
-  restructurePost(myPosts, userPosts)  
-
-
+  if (post) {
+    restructurePost(post, userPosts)  
+  }
 
   posts.map((post) => {
     if (post.downloads !== null) {
@@ -59,8 +107,6 @@ const User = ({ user }: Props) => {
   const handleModalClose = () => {
     setIsModalOpen(false)
   }    
-
-  
   
   return (
     <div>
