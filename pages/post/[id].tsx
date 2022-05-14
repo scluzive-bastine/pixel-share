@@ -183,9 +183,9 @@ const Post = ({ post }: Props) => {
                         </a>
                         <div className='border border-gray-300 rounded-xl p-4 mb-5 flex justify-between items-center'>
                             <div onClick={() => handleLike(post._id, token)}>
-                                <BsHeartFill className={`text-2xl ${ !liked && !like  ? 'text-gray-200 hover:text-red-200 ' : 'text-red-600'} mb-2 cursor-pointer transition duration-150 ease-in-out`} />
+                                <BsHeartFill className={`text-2xl ${  !like && !liked  ? 'text-gray-200 hover:text-red-200 ' : 'text-red-600'} mb-2 cursor-pointer transition duration-150 ease-in-out`} />
                                 <div>
-                                    { !liked ? 'Like' : 'Liked'}
+                                    { !like && !liked ? 'Like' : 'Liked'}
                                 </div>
                             </div>
                         <div>
